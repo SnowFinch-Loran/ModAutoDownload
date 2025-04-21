@@ -308,11 +308,10 @@ Verify setup with /durl list
 File Structure
 The mod creates the following structure:
 
-mods/
-  SDSetup/
-    Settings.json
+mods/SDSetup/Settings.json
+
 Configuration File Format
-————
+
 {
   "urls": {
     "1": "http://example.com/mods/mod1.jar",
@@ -323,7 +322,7 @@ Configuration File Format
     "logBans": true
   }
 }
-————
+
 Runtime Configuration
 All settings can be modified through commands without editing the file directly:
 
@@ -335,14 +334,14 @@ All settings can be modified through commands without editing the file directly:
 Endpoint: /getDurlData
 Method: GET or HEAD
 Response:
-————
+
 {
   "urls": {
     "1": "http://example.com/mods/mod1.jar",
     "2": "http://example.com/mods/mod2.jar"
   }
 }
-————
+
 Headers:
 
 Content-Type: application/json
@@ -354,11 +353,11 @@ Rate limited to 100 requests/minute/IP
 Excessive requests result in 30-minute IP ban
 
 Error Responses
-————
+
 {
   "error": "IP blocked due to excessive requests"
 }
-————
+
 403: IP blocked
 
 500: Server error
@@ -390,27 +389,27 @@ Extensible architecture for future integration with proper geolocation APIs
 # Command Reference
 Mod URL Management
 
-/durl add [number] [url]	Add mod URL	/durl add 1 http://example.com/mod.jar
+/durl add [number] [url]	Add mod URL	-> Example : /durl add 1 http://example.com/mod.jar
 
-/durl delete [number]	Remove mod URL	/durl delete 1
+/durl delete [number]	Remove mod URL	-> Example : /durl delete 1
 
-/durl list	List all mod URLs	/durl list
+/durl list	List all mod URLs	-> Example : /durl list
 
-/durl clear	Remove all mod URLs	/durl clear
+/durl clear	Remove all mod URLs	-> Example : /durl clear
 
 Configuration
 
-/durl file	Open config file	/durl file
+/durl file	Open config file	-> Example : /durl file
 
-/durl clo Enable|Disable	Toggle connection logging	/durl clo Disable
+/durl clo Enable|Disable	Toggle connection logging	-> Example : /durl clo Disable
 
-/durl banlog Enable|Disable	Toggle ban logging	/durl banlog Enable
+/durl banlog Enable|Disable	Toggle ban logging	-> Example : /durl banlog Enable
 
 Information
 
-/durl clo	Show connection logging status	/durl clo
+/durl clo	Show connection logging status	-> Example : /durl clo
 
-/durl banlog	Show ban logging status	/durl banlog
+/durl banlog	Show ban logging status	-> Example : /durl banlog
 
 # Troubleshooting
 Common Issues
