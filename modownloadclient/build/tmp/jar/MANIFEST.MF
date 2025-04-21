@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Specification-Title: modownloadclient
+Specification-Vendor: DeutschLand_3
+Specification-Version: 1
+Implementation-Title: modownloadclient
+Implementation-Version: 1.0
+Implementation-Vendor: DeutschLand_3
+Implementation-Timestamp: 2025-04-21T17:16:29+0800
+MixinConfigs: modownloadclient.mixins.json
+
