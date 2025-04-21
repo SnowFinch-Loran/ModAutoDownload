@@ -1,6 +1,8 @@
 # ModAutoDownload - Minecraft Mod Downloader
 
-# ===========SubProject : ModDownloadClient - Minecraft Mod Downloader(Folder "modownloadclient")===========
+# ===========SubProject 1===========
+
+# ModDownloadClient - Minecraft Mod Downloader(Folder "modownloadclient")===========
 
 Introduction
 ModownloadClient is a sophisticated Minecraft Forge mod designed for 1.16.5 that provides a user-friendly interface for downloading and managing mods from a centralized server. This mod implements a robust download manager with pause/resume functionality, progress tracking, speed monitoring, and intelligent file management capabilities.
@@ -246,7 +248,9 @@ Appropriate test cases
 
 Backward compatibility
 
-# ===========SubProject : SimpleDownload - Minecraft Mod Distribution Server(Folder "simpledownload")===========
+# ===========SubProject 2===========
+
+# SimpleDownload - Minecraft Mod Distribution Server(Folder "simpledownload")
 
 Introduction
 SimpleDownload is a robust server-side mod for Minecraft 1.16.5 Forge designed to facilitate secure and efficient mod distribution. This mod implements an HTTP server within the Minecraft environment, providing a RESTful API endpoint for clients to retrieve mod packages while incorporating enterprise-grade security features like rate limiting and IP blocking.
