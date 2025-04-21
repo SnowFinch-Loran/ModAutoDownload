@@ -77,17 +77,16 @@ Cancel: Stops all downloads and closes the application
 File Structure
 The mod creates the following directory structure:
 
-mods/
-  Data/
-    Ignore.json
+mods/Data/Ignore.json
+
 Ignore List Management
 The ignore list is stored in mods/Data/Ignore.json with the format:
 
-json
 {
   "1": "mod1.jar",
   "2": "mod2.jar"
 }
+
 Programmatic Configuration
 While most configuration is handled through the GUI, you can manually edit the Ignore.json file to add or remove mods from the ignore list.
 
@@ -313,7 +312,7 @@ mods/
   SDSetup/
     Settings.json
 Configuration File Format
-json
+————
 {
   "urls": {
     "1": "http://example.com/mods/mod1.jar",
@@ -324,6 +323,7 @@ json
     "logBans": true
   }
 }
+————
 Runtime Configuration
 All settings can be modified through commands without editing the file directly:
 
@@ -335,14 +335,14 @@ All settings can be modified through commands without editing the file directly:
 Endpoint: /getDurlData
 Method: GET or HEAD
 Response:
-
-json
+————
 {
   "urls": {
     "1": "http://example.com/mods/mod1.jar",
     "2": "http://example.com/mods/mod2.jar"
   }
 }
+————
 Headers:
 
 Content-Type: application/json
@@ -354,10 +354,11 @@ Rate limited to 100 requests/minute/IP
 Excessive requests result in 30-minute IP ban
 
 Error Responses
-json
+————
 {
   "error": "IP blocked due to excessive requests"
 }
+————
 403: IP blocked
 
 500: Server error
@@ -388,24 +389,26 @@ Extensible architecture for future integration with proper geolocation APIs
 
 # Command Reference
 Mod URL Management
-Command	Description	Example
+
 /durl add [number] [url]	Add mod URL	/durl add 1 http://example.com/mod.jar
 /durl delete [number]	Remove mod URL	/durl delete 1
 /durl list	List all mod URLs	/durl list
 /durl clear	Remove all mod URLs	/durl clear
+
 Configuration
-Command	Description	Example
+
 /durl file	Open config file	/durl file
 /durl clo Enable|Disable	Toggle connection logging	/durl clo Disable
 /durl banlog Enable|Disable	Toggle ban logging	/durl banlog Enable
+
 Information
-Command	Description	Example
+
 /durl clo	Show connection logging status	/durl clo
 /durl banlog	Show ban logging status	/durl banlog
 
 # Troubleshooting
 Common Issues
-Server Not Starting
+HTTPServer Not Starting :
 
 Verify port 8000 is available
 
@@ -413,7 +416,7 @@ Check server logs for binding errors
 
 Ensure no firewall is blocking the port
 
-Configuration Not Saving
+Configuration Not Saving :
 
 Verify write permissions in mods/SDSetup
 
@@ -429,7 +432,7 @@ Check for IP blocks (excessive requests)
 
 Ensure client has network access to server
 
-Logging
+# Logging
 Important log entries are prefixed with:
 
 [Simpledownload][Event] - Server operations
