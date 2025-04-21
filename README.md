@@ -2,14 +2,14 @@
 
 # ===========SubProject 1===========
 
-# ModDownloadClient - Minecraft Mod Downloader(Folder "modownloadclient")===========
+# ModDownloadClient - Minecraft Mod Downloader(Folder "modownloadclient")
 
-Introduction
+# Introduction
 ModownloadClient is a sophisticated Minecraft Forge mod designed for 1.16.5 that provides a user-friendly interface for downloading and managing mods from a centralized server. This mod implements a robust download manager with pause/resume functionality, progress tracking, speed monitoring, and intelligent file management capabilities.
 
 Built with JavaFX for the GUI and leveraging Minecraft Forge's modding framework, ModownloadClient offers server administrators a powerful tool to distribute mod packages while giving players control over which mods they want to install or ignore.
 
-Features
+# Features
 Core Functionality
 Server-based Mod Distribution: Download mods from a configured server endpoint
 
@@ -19,7 +19,7 @@ Speed Monitoring: Current download speed displayed in KB/s
 
 File Management: Automatic cleanup of non-server files (with ignore list support)
 
-Advanced Capabilities
+# Advanced Capabilities
 Pause/Resume Downloads: Temporarily halt downloads and resume later
 
 Ignore System: Whitelist specific mods to prevent deletion during cleanup
@@ -30,7 +30,7 @@ Automatic Restart Prompt: Recommends game restart after completing downloads
 
 Thread-safe Operations: Safe multithreading implementation for background downloads
 
-User Experience
+# User Experience
 Clean UI: Intuitive interface with clear status indicators
 
 Error Handling: User-friendly error messages for common issues
@@ -39,7 +39,7 @@ Modal Dialogs: Separate windows for configuration and status
 
 Responsive Design: UI updates are handled on the JavaFX application thread
 
-Installation
+# Installation
 Requirements
 Minecraft 1.16.5
 
@@ -56,7 +56,7 @@ Launch Minecraft with Forge profile
 
 The mod will automatically create necessary directories and configuration files
 
-Usage
+# Usage
 Basic Operation
 Upon launching Minecraft with the mod installed, a GUI window will appear
 
@@ -73,17 +73,7 @@ Pause/Resume: Use the pause button to temporarily stop downloads
 
 Cancel: Stops all downloads and closes the application
 
-Server Configuration
-The server should provide a JSON response with the following structure:
-
-json
-{
-  "urls": {
-    "1": "http://example.com/mods/mod1.jar",
-    "2": "http://example.com/mods/mod2.jar"
-  }
-}
-Configuration
+# Configuration
 File Structure
 The mod creates the following directory structure:
 
@@ -101,7 +91,7 @@ json
 Programmatic Configuration
 While most configuration is handled through the GUI, you can manually edit the Ignore.json file to add or remove mods from the ignore list.
 
-Technical Details
+# Technical Details
 Architecture Overview
 ModownloadClient consists of two main components:
 
@@ -128,7 +118,7 @@ Speed calculation smoothed over 200ms intervals
 
 Memory-efficient streaming of download content
 
-API Integration
+# API Integration
 Server Requirements
 The server must implement:
 
@@ -152,7 +142,7 @@ File write permissions
 
 Missing directories
 
-Troubleshooting
+# Troubleshooting
 Common Issues
 Server Not Reachable
 
@@ -187,7 +177,7 @@ File system operations
 
 JSON parsing errors
 
-Development
+# Development
 Building from Source
 Clone the repository
 
@@ -215,6 +205,21 @@ Add mod version checking
 
 Support for multiple server endpoints
 
+# Contributing
+We welcome contributions! Please follow these guidelines:
+
+Fork the repository
+
+Create a feature branch
+
+Submit pull requests with:
+
+Clear documentation
+
+Appropriate test cases
+
+Backward compatibility
+
 Code Style
 Follow Oracle Java Code Conventions
 
@@ -233,31 +238,16 @@ Various server response types
 
 Edge cases in file handling
 
-Contributing
-We welcome contributions! Please follow these guidelines:
-
-Fork the repository
-
-Create a feature branch
-
-Submit pull requests with:
-
-Clear documentation
-
-Appropriate test cases
-
-Backward compatibility
-
 # ===========SubProject 2===========
 
 # SimpleDownload - Minecraft Mod Distribution Server(Folder "simpledownload")
 
-Introduction
+# Introduction
 SimpleDownload is a robust server-side mod for Minecraft 1.16.5 Forge designed to facilitate secure and efficient mod distribution. This mod implements an HTTP server within the Minecraft environment, providing a RESTful API endpoint for clients to retrieve mod packages while incorporating enterprise-grade security features like rate limiting and IP blocking.
 
 Built on Java's lightweight HTTP server framework, SimpleDownload offers server administrators complete control over mod distribution with real-time monitoring capabilities, making it ideal for modpack distribution, private servers, or mod development teams.
 
-Features
+# Features
 Core Functionality
 Embedded HTTP Server: Runs on port 8000 by default
 
@@ -283,7 +273,7 @@ Desktop Integration: Direct config file opening from game
 
 Real-time Monitoring: Connection statistics and security events
 
-Installation
+# Installation
 Requirements
 Minecraft Server 1.16.5
 
@@ -300,7 +290,7 @@ Start the server to generate default configuration
 
 Configure mod URLs using in-game commands or config file
 
-Usage
+# Usage
 Basic Operation
 The mod automatically starts an HTTP server on port 8000
 
@@ -315,7 +305,7 @@ Add mod URLs using /durl add [number] [url]
 
 Verify setup with /durl list
 
-Configuration
+# Configuration
 File Structure
 The mod creates the following structure:
 
@@ -341,7 +331,7 @@ All settings can be modified through commands without editing the file directly:
 
 /durl banlog Enable|Disable - Toggle ban logging
 
-API Documentation
+# API Documentation
 Endpoint: /getDurlData
 Method: GET or HEAD
 Response:
@@ -372,7 +362,7 @@ json
 
 500: Server error
 
-Security Implementation
+# Security Implementation
 Rate Limiting Architecture
 ConcurrentHashMap tracks IP access counts
 
@@ -396,7 +386,7 @@ TLD-based country guessing
 
 Extensible architecture for future integration with proper geolocation APIs
 
-Command Reference
+# Command Reference
 Mod URL Management
 Command	Description	Example
 /durl add [number] [url]	Add mod URL	/durl add 1 http://example.com/mod.jar
@@ -412,7 +402,8 @@ Information
 Command	Description	Example
 /durl clo	Show connection logging status	/durl clo
 /durl banlog	Show ban logging status	/durl banlog
-Troubleshooting
+
+# Troubleshooting
 Common Issues
 Server Not Starting
 
@@ -447,7 +438,7 @@ Important log entries are prefixed with:
 
 [Simpledownload][CMD] - Command execution
 
-Development
+# Development
 Building from Source
 Clone the repository
 
@@ -488,27 +479,7 @@ Implement download statistics tracking
 
 Add support for mod version checking
 
-Code Standards
-Follow Oracle Java Code Conventions
-
-Use descriptive variable names
-
-Include comments for complex logic
-
-Maintain consistent indentation (4 spaces)
-
-Testing
-Test cases should cover:
-
-Various network conditions
-
-Edge cases in configuration
-
-Security scenarios
-
-Command validation
-
-Contributing
+# Contributing
 We welcome contributions! Please follow these guidelines:
 
 Fork the repository
@@ -522,3 +493,21 @@ Clear documentation
 Appropriate test cases
 
 Backward compatibility
+
+Code Style
+Follow Oracle Java Code Conventions
+
+Use descriptive variable names
+
+Include comments for complex logic
+
+Maintain consistent indentation (4 spaces)
+
+Testing
+Please test any changes against:
+
+Different network conditions
+
+Various server response types
+
+Edge cases in file handling
