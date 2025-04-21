@@ -391,19 +391,25 @@ Extensible architecture for future integration with proper geolocation APIs
 Mod URL Management
 
 /durl add [number] [url]	Add mod URL	/durl add 1 http://example.com/mod.jar
+
 /durl delete [number]	Remove mod URL	/durl delete 1
+
 /durl list	List all mod URLs	/durl list
+
 /durl clear	Remove all mod URLs	/durl clear
 
 Configuration
 
 /durl file	Open config file	/durl file
+
 /durl clo Enable|Disable	Toggle connection logging	/durl clo Disable
+
 /durl banlog Enable|Disable	Toggle ban logging	/durl banlog Enable
 
 Information
 
 /durl clo	Show connection logging status	/durl clo
+
 /durl banlog	Show ban logging status	/durl banlog
 
 # Troubleshooting
