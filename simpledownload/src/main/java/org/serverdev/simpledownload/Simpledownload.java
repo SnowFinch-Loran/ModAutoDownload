@@ -181,10 +181,37 @@ public class Simpledownload {
             }
 
             private static int addUrl(CommandSource source, int number, String url) throws CommandSyntaxException {
+                // Verify if the URL belongs to CurseForge
+                if (!isValidCurseForgeUrl(url)) {
+                    source.sendFailure(new StringTextComponent(
+                            "§b[Simpledownload]§4[CMD]§f> Invalid URL! Only CurseForge links are allowed (e.g., https://www.curseforge.com/... Or https://mediafilez.forgecdn.net/...)"
+                    ));
+                    return 0;
+                }
+
                 urlMap.put(number, url);
-                saveUrlsToJson(); // Added auto-save
+                saveUrlsToJson();
                 source.sendSuccess(new StringTextComponent("§b[Simpledownload]§a[CMD]§f>URL added for table " + number + ": " + url), false);
                 return 1;
+            }
+
+            // Verify whether the URL is a subdomain of CurseForge (Or media files from forgecdn)
+            private static boolean isValidCurseForgeUrl(String url) {
+                try {
+                    java.net.URI uri = new java.net.URI(url);
+                    String host = uri.getHost();
+                    if (host == null) return false;
+
+                    // Allowed Domain Name Rules:
+                    // 1. curseforge.com and its subdomains (e.g. www.curseforge.com)
+                    // 2. forgecdn.net and its subdomains (e.g. mediafilez.forgecdn.net)
+                    return host.equals("curseforge.com") ||
+                            host.endsWith(".curseforge.com") ||
+                            host.equals("forgecdn.net") ||
+                            host.endsWith(".forgecdn.net");
+                } catch (Exception e) {
+                    return false;
+                }
             }
 
             private static int listUrls(CommandSource source) {
@@ -208,26 +235,57 @@ public class Simpledownload {
             }
 
             public static void loadUrlsFromJson() {
-                try (Reader reader = new FileReader(configFile)) {
-                    JsonObject root = GSON.fromJson(reader, JsonObject.class);
-                    if (root != null) {
-                        // Load URLs
-                        if (root.has("urls")) {
-                            urlMap.clear();
-                            JsonObject urls = root.getAsJsonObject("urls");
-                            urls.entrySet().forEach(entry -> {
-                                urlMap.put(Integer.parseInt(entry.getKey()), entry.getValue().getAsString());
-                            });
+                try {
+                    // Make sure the directory exists
+                    if (!configDir.exists()) {
+                        boolean dirCreated = configDir.mkdirs();
+                        if (!dirCreated) {
+                            LOGGER.error("§b[Simpledownload]§4[Event]§f>Failed to create directory: {}", configDir.getAbsolutePath());
+                            return;
                         }
+                    }
 
-                        // Load Config -> (Settings)
-                        if (root.has("settings")) {
-                            JsonObject settings = root.getAsJsonObject("settings");
-                            if (settings.has("logConnections")) {
-                                logConnections = settings.get("logConnections").getAsBoolean();
+                    // Make sure the file exists (if not, an empty file will be created)
+                    if (!configFile.exists()) {
+                        try (Writer writer = new FileWriter(configFile)) {
+                            JsonObject root = new JsonObject();
+                            root.add("urls", new JsonObject());
+                            root.add("settings", new JsonObject());
+                            GSON.toJson(root, writer);
+                        }
+                    }
+
+                    // Load Data
+                    try (Reader reader = new FileReader(configFile)) {
+                        JsonObject root = GSON.fromJson(reader, JsonObject.class);
+                        if (root != null) {
+                            // Load URLs
+                            if (root.has("urls")) {
+                                urlMap.clear();
+                                JsonObject urls = root.getAsJsonObject("urls");
+                                urls.entrySet().forEach(entry -> {
+                                    try {
+                                        String url = entry.getValue().getAsString();
+                                        if (isValidCurseForgeUrl(url)) {
+                                            urlMap.put(Integer.parseInt(entry.getKey()), url);
+                                        } else {
+                                            LOGGER.warn("§b[Simpledownload]§6[Filter]§f> Skipped non-CurseForge URL: {}", url);
+                                        }
+                                    } catch (Exception e) {
+                                        LOGGER.error("§b[Simpledownload]§4[Error]§f> Failed to parse URL entry: {}", entry.getKey(), e);
+                                    }
+                                });
                             }
-                            if (settings.has("logBans")) {
-                                logBans = settings.get("logBans").getAsBoolean();
+
+                            // Load Config -> (Settings)
+                            if (root.has("settings")) {
+                                JsonObject settings = root.getAsJsonObject("settings");
+                                if (settings.has("logConnections")) {
+                                    logConnections = settings.get("logConnections").getAsBoolean();
+                                }
+                                if (settings.has("logBans")) {
+                                    logBans = settings.get("logBans").getAsBoolean();
+                                }
                             }
                         }
                     }
@@ -237,21 +295,43 @@ public class Simpledownload {
             }
 
             private static void saveUrlsToJson() {
-                try (Writer writer = new FileWriter(configFile)) {
-                    JsonObject root = new JsonObject();
+                try {
+                    // Make sure the directory exists
+                    if (!configDir.exists()) {
+                        boolean dirCreated = configDir.mkdirs();
+                        if (!dirCreated) {
+                            LOGGER.error("§b[Simpledownload]§4[Event]§f>Failed to create directory: {}", configDir.getAbsolutePath());
+                            return;
+                        }
+                    }
 
-                    // Save URLs
-                    JsonObject urls = new JsonObject();
-                    urlMap.forEach((k, v) -> urls.addProperty(k.toString(), v));
-                    root.add("urls", urls);
+                    // Make sure the file exists (create an empty file if not)
+                    if (!configFile.exists()) {
+                        try (Writer writer = new FileWriter(configFile)) {
+                            JsonObject root = new JsonObject();
+                            root.add("urls", new JsonObject());
+                            root.add("settings", new JsonObject());
+                            GSON.toJson(root, writer);
+                        }
+                    }
 
-                    // Save Config -> (Settings)
-                    JsonObject settings = new JsonObject();
-                    settings.addProperty("logConnections", logConnections);
-                    settings.addProperty("logBans", logBans);
-                    root.add("settings", settings);
+                    // Write Data
+                    try (Writer writer = new FileWriter(configFile)) {
+                        JsonObject root = new JsonObject();
 
-                    GSON.toJson(root, writer);
+                        // Save URLs
+                        JsonObject urls = new JsonObject();
+                        urlMap.forEach((k, v) -> urls.addProperty(k.toString(), v));
+                        root.add("urls", urls);
+
+                        // Save Config -> (Settings)
+                        JsonObject settings = new JsonObject();
+                        settings.addProperty("logConnections", logConnections);
+                        settings.addProperty("logBans", logBans);
+                        root.add("settings", settings);
+
+                        GSON.toJson(root, writer);
+                    }
                 } catch (IOException e) {
                     LOGGER.error("§b[Simpledownload]§4[Event]§f>Cannot Save Settings", e);
                 }
