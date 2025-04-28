@@ -104,7 +104,7 @@ public class Modownloadclient {
                         DownloadProgressWindow.setDownloadedFilesCount(downloadedFileCount);
                     }
 
-                    // 检查是否完成
+                    // Check if Finished
                     if ((downloadedFileCount + skippedFileCount) == totalFilesCount) {
                         DownloadProgressWindow.showRestartDialog();
                         break;
@@ -121,7 +121,7 @@ public class Modownloadclient {
         String fileName = getFileNameFromUrl(fileUrl);
         File ignoreFile = new File(Minecraft.getInstance().gameDirectory, "mods/Data/Ignore.json");
 
-        // 检查忽略列表
+        // Check Ignore List
         if (ignoreFile.exists()) {
             try {
                 JsonObject ignoreJson = new Gson().fromJson(
