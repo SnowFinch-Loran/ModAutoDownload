@@ -1,3 +1,9 @@
+# WARN : THIS PROJECT REQUIRED JAVA FX
+
+# OR JDKs BEFORE 8u451,AS IT DOES NOT SUPPORT FX ANYMORE
+
+# ———————————————————————
+
 # ModAutoDownload - Minecraft Mod Downloader
 
 # ===========SubProject 1===========
